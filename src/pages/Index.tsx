@@ -2,7 +2,8 @@ import { useState } from "react";
 import Icon from "@/components/ui/icon";
 
 const HERO_IMG = "https://cdn.poehali.dev/projects/7836bc18-fe8d-4921-b150-7b667c156951/files/9519dd06-b186-490c-a101-ab86e2a5853d.jpg";
-const AGENT_IMG = "https://cdn.poehali.dev/projects/7836bc18-fe8d-4921-b150-7b667c156951/files/c65375f7-bbd4-4394-9e8c-ef704bada8ff.jpg";
+const AGENT_IMG = "https://cdn.poehali.dev/projects/7836bc18-fe8d-4921-b150-7b667c156951/files/547f23ce-dfe0-4b6d-bd0c-95cc45888a23.jpg";
+const SEND_LEAD_URL = "https://functions.poehali.dev/a5ec6d41-dffd-4e7e-b571-6b5bdaf450e5";
 
 const quizSteps = [
   {
@@ -99,8 +100,20 @@ export default function Index() {
     }
   };
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    try {
+      await fetch(SEND_LEAD_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          phone: formData.phone,
+          email: formData.email,
+          answers,
+        }),
+      });
+    } catch (err) { console.error(err); }
     setActiveSection("result");
   };
 
