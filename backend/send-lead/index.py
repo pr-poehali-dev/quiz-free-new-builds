@@ -94,7 +94,7 @@ def handler(event: dict, context) -> dict:
         </div>
         """
 
-        smtp_user = "Smirnovuslugi@yandex.ru"
+        smtp_user = "Rabotalid2026@mail.ru"
         smtp_password = os.environ.get("SMTP_PASSWORD", "")
 
         msg = MIMEMultipart("alternative")
@@ -104,7 +104,7 @@ def handler(event: dict, context) -> dict:
 
         msg.attach(MIMEText(email_body, "html", "utf-8"))
 
-        with smtplib.SMTP_SSL("smtp.yandex.ru", 465) as server:
+        with smtplib.SMTP_SSL("smtp.mail.ru", 465) as server:
             server.login(smtp_user, smtp_password)
             server.sendmail(smtp_user, smtp_user, msg.as_string())
 
